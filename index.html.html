@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>GerakKu – Media Interaktif Animasi Gerak Benda</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light;--bg:#dfe6ff;--card:#fff;--tx:#161b2e;--mu:#59627f;--ac:#3b5bdb;--ac2:#e7ecff;--pk:#f72585;--ok:#2b8a3e;--no:#c92a2a;--bd:#d3d9ee;--g1:#3b5bdb;--g2:#9d4edd;--s1:#cfe0ff;--s2:#eef3ff;--gr:#b9c6e6}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0c0f19;--card:#181d2c;--tx:#e8ebf5;--mu:#9aa3bf;--ac:#7c96ff;--ac2:#232a45;--pk:#ff5ca8;--ok:#69db7c;--no:#ff8787;--bd:#2a3150;--g1:#2f46a8;--g2:#6a33b0;--s1:#1b2a5e;--s2:#0f1733;--gr:#2b3a6e}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0c0f19;--card:#181d2c;--tx:#e8ebf5;--mu:#9aa3bf;--ac:#7c96ff;--ac2:#232a45;--pk:#ff5ca8;--ok:#69db7c;--no:#ff8787;--bd:#2a3150;--g1:#2f46a8;--g2:#6a33b0;--s1:#1b2a5e;--s2:#0f1733;--gr:#2b3a6e}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:940px;margin:0 auto;padding:14px}
+.stage{background:var(--card);border-radius:22px;box-shadow:0 10px 34px rgba(30,40,100,.2);overflow:hidden;min-height:540px;display:flex;flex-direction:column}
+.hd{display:flex;align-items:center;gap:12px;padding:13px 18px;background:linear-gradient(120deg,var(--g1),var(--g2));color:#fff;font-size:1.1rem}
+.ic{text-decoration:none;font-size:1.3rem;background:rgba(255,255,255,.22);border-radius:10px;padding:2px 10px}
+.bd{flex:1;padding:18px 20px}.ft{display:flex;gap:10px;justify-content:space-between;align-items:center;padding:12px 18px;border-top:1px solid var(--bd);flex-wrap:wrap}
+.cov{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:34px 20px;color:#fff;background:linear-gradient(135deg,var(--g1),var(--g2))}
+.cov h1{font-size:clamp(2.4rem,9vw,3.6rem);letter-spacing:.08em;margin:.1em 0}.cov h2{font-weight:500;margin:0 0 .6em}
+.rocket{font-size:64px;animation:fl 2.4s ease-in-out infinite}@keyframes fl{50%{transform:translateY(-14px) rotate(6deg)}}
+.btn,button.b{font:inherit;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:999px;padding:9px 20px;cursor:pointer;text-decoration:none;display:inline-block}
+.btn.p,button.p,.tab.on{background:var(--ac);border-color:var(--ac);color:#fff}
+.cov .btn.p{background:#fff;color:#3b3bb5;font-weight:700;font-size:1.1rem;padding:12px 34px}
+button:disabled{opacity:.4;cursor:default}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px}
+.tile{text-decoration:none;color:var(--tx);background:var(--ac2);border:2px solid var(--bd);border-radius:18px;padding:22px 10px;text-align:center;font-weight:700;transition:transform .15s}
+.tile:hover{transform:translateY(-4px);border-color:var(--ac)}.tile span{display:block;font-size:2.4rem}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.tab{font:inherit;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:999px;padding:6px 14px;cursor:pointer}
+canvas{width:100%;height:290px;display:block;border-radius:14px;background:var(--s2)}
+.read{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;margin-top:10px}
+.read div{background:var(--ac2);border-radius:12px;padding:6px 8px;text-align:center}.read small{display:block;color:var(--mu);font-size:12px}.read strong{font-size:17px}
+.ctl{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-top:12px}
+.ctl label{font-size:13px;font-weight:600;color:var(--mu);display:block}.ctl b{color:var(--ac)}
+input[type=range]{width:100%;accent-color:var(--ac)}select{width:100%;padding:8px;border-radius:10px;border:1.5px solid var(--bd);background:var(--card);color:var(--tx)}
+.btns{display:flex;gap:8px;margin-top:12px}
+.f{font-family:ui-monospace,Menlo,Consolas,monospace;background:var(--ac2);padding:3px 9px;border-radius:6px;display:inline-block}
+.fact{background:var(--ac2);border-left:4px solid var(--pk);border-radius:10px;padding:10px 14px;margin:10px 0}
+.mu{color:var(--mu)}
+.opt{display:block;width:100%;text-align:left;font:inherit;color:var(--tx);background:var(--card);border:2px solid var(--bd);border-radius:12px;padding:11px 14px;margin:8px 0;cursor:pointer}
+.opt.ok{border-color:var(--ok)}.opt.no{border-color:var(--no)}
+.bar{height:8px;background:var(--ac2);border-radius:99px;overflow:hidden;margin:6px 0 14px}.bar i{display:block;height:100%;background:var(--ac)}
+.big{font-size:3.4rem;font-weight:800;color:var(--ac);text-align:center}table{border-collapse:collapse}td{padding:4px 12px 4px 0}.in{width:100%;padding:11px 14px;margin:4px 0 12px;border-radius:12px;border:2px solid var(--bd);background:var(--card);color:var(--tx);font:inherit}.mh{display:flex;align-items:center;gap:14px;padding:16px;border-radius:18px;background:linear-gradient(120deg,var(--g1),var(--g2));color:#fff;margin-bottom:12px}.mh span{font-size:46px}.mh h2{margin:0}.mh small{opacity:.85}.ch{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}.ch div{background:var(--ac2);border-radius:14px;padding:10px 12px}.ch b{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--ac);color:#fff;margin-right:8px;font-size:13px}
+</style></head><body>
+<div class="wrap"><div class="stage" id="st"></div></div>
+<script>
+const $=id=>document.getElementById(id),st$=$("st");
+const fm=(n,d=1)=>Number(n).toFixed(d).replace(".",",");
+const col=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const pg=(t,b,f)=>`<div class="hd"><a class="ic" href="#menu" title="Menu">🏠</a><b>${t}</b></div><div class="bd">${b}</div><div class="ft">${f||'<a class="btn" href="#menu">⬅ Menu</a><span></span>'}</div>`;
+let cv,ctx,W,H,t=0,playing=true,speed=1,hold=0,last=0,p={},mk="glb",tok=0,mi=0,sm="glb";
+
+/* ---------- gambar ---------- */
+function sky(){const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,col("--s1"));g.addColorStop(1,col("--s2"));ctx.fillStyle=g;ctx.fillRect(0,0,W,H)}
+function txt(s,x,y,c,sz=12,al="center"){ctx.fillStyle=c;ctx.font=`600 ${sz}px system-ui,sans-serif`;ctx.textAlign=al;ctx.fillText(s,x,y)}
+function arrow(x1,y1,x2,y2,c){ctx.strokeStyle=c;ctx.fillStyle=c;ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();if(Math.hypot(x2-x1,y2-y1)<5)return;const a=Math.atan2(y2-y1,x2-x1);ctx.beginPath();ctx.moveTo(x2,y2);ctx.lineTo(x2-9*Math.cos(a-.4),y2-9*Math.sin(a-.4));ctx.lineTo(x2-9*Math.cos(a+.4),y2-9*Math.sin(a+.4));ctx.fill()}
+function car(x,y,c){ctx.fillStyle=c;ctx.beginPath();ctx.roundRect(x-30,y-30,60,20,6);ctx.fill();ctx.beginPath();ctx.roundRect(x-16,y-44,32,18,6);ctx.fill();ctx.fillStyle="rgba(255,255,255,.75)";ctx.fillRect(x-12,y-41,10,11);ctx.fillRect(x+2,y-41,10,11);[-18,18].forEach(d=>{ctx.fillStyle="#222";ctx.beginPath();ctx.arc(x+d,y-9,8,0,7);ctx.fill();ctx.fillStyle="#bbb";ctx.beginPath();ctx.arc(x+d,y-9,3,0,7);ctx.fill()})}
+function ball(x,y,r,c){const g=ctx.createRadialGradient(x-r/3,y-r/3,1,x,y,r);g.addColorStop(0,"#fff");g.addColorStop(.35,c);g.addColorStop(1,c);ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.fill()}
+const ground=y=>{ctx.fillStyle=col("--gr");ctx.fillRect(0,y,W,H-y)};
+function draw1d(pos,vel,maxX){const gy=H-46,x0=40,x1=W-40,sx=m=>x0+m/maxX*(x1-x0);sky();ground(gy);
+ for(let i=0;i<=10;i++){const m=maxX*i/10;ctx.fillStyle=col("--mu");ctx.fillRect(sx(m)-1,gy,2,8);txt(Math.round(m),sx(m),gy+24,col("--mu"),11)}
+ txt("posisi (m)",W/2,gy+40,col("--mu"),11);
+ for(let k=1;k<=Math.floor(t);k++){const x=sx(pos(k));ctx.fillStyle=col("--pk");ctx.beginPath();ctx.arc(x,gy-3,4,0,7);ctx.fill();txt(k+" s",x,gy-12,col("--pk"),10)}
+ const x=sx(pos(t));car(x,gy,col("--ac"));arrow(x,gy-58,x+vel(t)*4,gy-58,col("--ok"));txt("v",x+vel(t)*2,gy-66,col("--ok"),12)}
+const G={Bumi:9.8,Bulan:1.6,Mars:3.7,Jupiter:24.8};
+function sim1d(a,v0){let T=12;for(let s=0;s<12;s+=.01){if(v0*s+.5*a*s*s>=100||(a<0&&v0+a*s<=0)){T=s;break}}return Math.max(T,1)}
+
+/* ---------- materi & simulasi ---------- */
+const M={
+glb:{n:"GLB",t:"Gerak Lurus Beraturan (GLB)",d:"Benda bergerak lurus dengan kecepatan tetap sehingga percepatannya nol. Titik merah menandai posisi tiap 1 detik: jaraknya selalu sama.",f:"s = v × t",c:"Kereta di rel lurus berkecepatan konstan, eskalator.",ic:"🚗",ciri:["Kecepatan selalu tetap","Percepatan sama dengan nol","Jarak sama dalam selang waktu yang sama","Grafik s–t berupa garis lurus miring"],fk:"Saat mobil melaju stabil di jalan tol, jarum speedometer tidak bergerak. Itulah GLB!",
+ par:[{k:"v",l:"Kecepatan v (m/s)",min:2,max:20,val:8,st:1}],T:q=>60/q.v,
+ read:q=>[["Waktu",fm(t)+" s"],["Jarak",fm(q.v*t)+" m"],["Kecepatan",fm(q.v)+" m/s"]],draw:q=>draw1d(s=>q.v*Math.min(s,60/q.v),()=>q.v,60)},
+glbb:{n:"GLBB",t:"Gerak Lurus Berubah Beraturan (GLBB)",d:"Benda bergerak lurus dengan percepatan tetap sehingga kecepatannya berubah teratur. Coba percepatan positif (dipercepat) dan negatif (diperlambat).",f:"v = v₀ + a·t  ;  s = v₀·t + ½·a·t²",c:"Mobil yang mulai melaju, sepeda yang mengerem.",ic:"🏎️",ciri:["Percepatan selalu tetap","Kecepatan berubah secara teratur","Dipercepat jika a positif, diperlambat jika a negatif","Grafik v–t berupa garis lurus"],fk:"Mobil balap bisa mencapai 100 km/jam dari diam dalam sekitar 2,5 detik berkat percepatan yang sangat besar.",
+ par:[{k:"v0",l:"Kecepatan awal v₀ (m/s)",min:0,max:15,val:2,st:1},{k:"a",l:"Percepatan a (m/s²)",min:-3,max:5,val:2,st:.5}],T:q=>sim1d(q.a,q.v0),
+ read:q=>{const s=Math.min(t,sim1d(q.a,q.v0));return[["Waktu",fm(t)+" s"],["Jarak",fm(q.v0*s+.5*q.a*s*s)+" m"],["Kecepatan",fm(Math.max(0,q.v0+q.a*s))+" m/s"],["Percepatan",fm(q.a)+" m/s²"]]},
+ draw:q=>{const T=sim1d(q.a,q.v0);draw1d(s=>{s=Math.min(s,T);return q.v0*s+.5*q.a*s*s},s=>Math.max(0,q.v0+q.a*Math.min(s,T)),100)}},
+ff:{n:"Jatuh Bebas",t:"Gerak Jatuh Bebas",d:"Benda jatuh tanpa kecepatan awal, hanya karena gravitasi. Bola digambar tiap selang waktu sama: jaraknya makin jauh karena kecepatan bertambah. Tanpa hambatan udara, semua benda jatuh bersamaan.",f:"h = ½·g·t²  ;  v = g·t",c:"Apel jatuh dari pohon, batu dilepas dari jembatan.",ic:"🍎",ciri:["Kecepatan awal sama dengan nol","Percepatan = gravitasi (g ≈ 9,8 m/s² di Bumi)","Tidak bergantung pada massa benda","Lintasan lurus ke bawah"],fk:"Astronot Apollo 15 menjatuhkan palu dan bulu di Bulan, dan keduanya mendarat bersamaan karena tidak ada udara.",
+ par:[{k:"h",l:"Ketinggian h (m)",min:5,max:100,val:40,st:5},{k:"pl",l:"Planet",opts:Object.keys(G),val:"Bumi"}],T:q=>Math.sqrt(2*q.h/G[q.pl]),
+ read:q=>{const g=G[q.pl],s=Math.min(t,Math.sqrt(2*q.h/g));return[["Waktu",fm(t)+" s"],["Sudah jatuh",fm(.5*g*s*s)+" m"],["Kecepatan",fm(g*s)+" m/s"],["Gravitasi",fm(g)+" m/s²"]]},
+ draw:q=>{const g=G[q.pl],T=Math.sqrt(2*q.h/g),top=30,bot=H-40,sy=m=>top+m/q.h*(bot-top),cl={Bumi:"#e63946",Bulan:"#8d99ae",Mars:"#e76f51",Jupiter:"#f4a261"}[q.pl];sky();ground(bot+12);
+  for(let i=0;i<=4;i++){const m=q.h*i/4;ctx.fillStyle=col("--mu");ctx.fillRect(40,sy(m),10,2);txt(Math.round(q.h-m)+" m",34,sy(m)+4,col("--mu"),10,"right")}
+  txt("🪐 "+q.pl,W-20,24,col("--tx"),14,"right");
+  for(let i=0;i<=8;i++){if(i*T/8<=t){ctx.globalAlpha=.35;ball(W/2,sy(.5*g*(i*T/8)**2),12,cl);ctx.globalAlpha=1}}
+  const s=Math.min(t,T),y=sy(.5*g*s*s);ball(W/2,y,13,cl);arrow(W/2+28,y,W/2+28,y+g*s*1.6,col("--ok"))}},
+proj:{n:"Parabola",t:"Gerak Parabola",d:"Gabungan GLB pada sumbu x (panah merah) dan GLBB pada sumbu y (panah biru). Jangkauan terjauh dicapai pada sudut 45°.",f:"x = v₀·cosθ·t  ;  y = v₀·sinθ·t − ½·g·t²",c:"Bola yang ditendang, lemparan lembing, air mancur.",ic:"🏀",ciri:["Gabungan GLB (sumbu x) dan GLBB (sumbu y)","Lintasan berbentuk parabola","Di puncak, kecepatan vertikal = 0","Jangkauan terjauh pada sudut 45°"],fk:"Pemain basket secara naluriah mengatur sudut lemparan agar bola membentuk parabola yang pas masuk ring.",
+ par:[{k:"v0",l:"Kecepatan awal v₀ (m/s)",min:5,max:40,val:22,st:1},{k:"th",l:"Sudut θ (°)",min:10,max:80,val:45,st:1}],T:q=>2*q.v0*Math.sin(q.th*Math.PI/180)/9.8,
+ read:q=>{const r=q.th*Math.PI/180,s=Math.min(t,2*q.v0*Math.sin(r)/9.8);return[["Waktu",fm(t)+" s"],["x",fm(q.v0*Math.cos(r)*s)+" m"],["y",fm(Math.max(0,q.v0*Math.sin(r)*s-4.9*s*s))+" m"],["Tinggi maks",fm((q.v0*Math.sin(r))**2/19.6)+" m"],["Jangkauan",fm(q.v0*q.v0*Math.sin(2*r)/9.8)+" m"]]},
+ draw:q=>{const r=q.th*Math.PI/180,vx=q.v0*Math.cos(r),vy0=q.v0*Math.sin(r),T=2*vy0/9.8,R=vx*T,Hm=vy0*vy0/19.6,gy=H-30,sc=Math.min((W-80)/Math.max(R,1),(gy-40)/Math.max(Hm,1)),X=s=>40+vx*s*sc,Y=s=>gy-(vy0*s-4.9*s*s)*sc;sky();ground(gy);
+  ctx.setLineDash([5,6]);ctx.strokeStyle=col("--mu");ctx.lineWidth=1.5;ctx.beginPath();for(let i=0;i<=60;i++){const s=T*i/60;i?ctx.lineTo(X(s),Y(s)):ctx.moveTo(X(s),Y(s))}ctx.stroke();ctx.setLineDash([]);
+  const s=Math.min(t,T);ctx.strokeStyle=col("--pk");ctx.lineWidth=3;ctx.beginPath();for(let i=0;i<=40;i++){const u=s*i/40;i?ctx.lineTo(X(u),Y(u)):ctx.moveTo(X(u),Y(u))}ctx.stroke();
+  const bx=X(s),by=Y(s);ball(bx,by,10,"#f77f00");arrow(bx,by,bx+vx*2.2,by,"#e63946");arrow(bx,by,bx,by-(vy0-9.8*s)*2.2,"#3a86ff")}}
+};
+function fit(){const d=devicePixelRatio||1,r=cv.getBoundingClientRect();W=r.width;H=r.height;cv.width=W*d;cv.height=H*d;ctx.setTransform(d,0,0,d,0,0)}
+function sim(box,k,ctl){const m=M[k];mk=k;const my=++tok;p={};m.par.forEach(a=>p[a.k]=a.val);t=0;playing=true;hold=0;speed=1;
+ box.innerHTML=`<canvas id="cv"></canvas><div class="read" id="rd"></div>`+(ctl?`<div class="ctl">${m.par.map(a=>a.opts?`<div><label>${a.l}</label><select onchange="p.${a.k}=this.value;t=0;hold=0">${a.opts.map(o=>`<option>${o}</option>`).join("")}</select></div>`:`<div><label>${a.l}: <b id="o_${a.k}">${a.val}</b></label><input type="range" min="${a.min}" max="${a.max}" step="${a.st}" value="${a.val}" oninput="p.${a.k}=+this.value;$('o_${a.k}').textContent=this.value;t=0;hold=0"></div>`).join("")}<div><label>Kecepatan animasi: <b id="o_sp">1×</b></label><input type="range" min=".25" max="2" step=".25" value="1" oninput="speed=+this.value;$('o_sp').textContent=this.value+'×'"></div></div><div class="btns"><button class="b p" onclick="playing=!playing;this.textContent=playing?'⏸ Jeda':'▶ Lanjut'">⏸ Jeda</button><button class="b" onclick="t=0;hold=0">↺ Ulangi</button></div>`:"");
+ cv=$("cv");ctx=cv.getContext("2d");fit();last=performance.now();
+ (function lp(now){if(my!==tok||!cv.isConnected)return;const dt=Math.min((now-last)/1000,.1);last=now;const T=m.T(p);
+  if(playing){if(t<T)t=Math.min(T,t+dt*speed);else{hold+=dt;if(hold>1.2){t=0;hold=0}}}
+  m.draw(p);$("rd").innerHTML=m.read(p).map(([a,b])=>`<div><small>${a}</small><strong>${b}</strong></div>`).join("");requestAnimationFrame(lp)})(last)}
+addEventListener("resize",()=>{if(cv&&cv.isConnected)fit()});
+
+/* ---------- halaman ---------- */
+const R={
+beranda:()=>`<div class="cov"><div class="rocket">🚀</div><p>Media Pembelajaran Interaktif</p><h1>GERAKKU</h1><h2>Animasi Gerak Benda</h2><p style="max-width:460px">Pahami GLB, GLBB, jatuh bebas, dan gerak parabola lewat animasi, simulasi, dan kuis.</p><a class="btn p" href="#login">▶ Mulai</a></div>`,
+login:()=>pg("Login",`<div style="max-width:420px;margin:10px auto"><h2 style="margin-top:0">👋 Selamat datang!</h2><p class="mu">Isi data dirimu sebelum mulai belajar.</p><label class="mu">Nama</label><input id="nm" class="in" placeholder="Nama lengkap" value="${user?esc(user.nama):""}"><label class="mu">Kelas</label><input id="kl" class="in" placeholder="Contoh: X TL 1" value="${user?esc(user.kelas):""}"><p id="er" style="color:var(--no);margin:0 0 10px"></p><button class="b p" onclick="masuk()">Masuk ▶</button></div>`,'<a class="btn" href="#beranda">⬅ Sampul</a><span></span>'),
+menu(){const T=[["petunjuk","📖","Petunjuk"],["materi","📚","Materi"],["kuis","📝","Kuis"],["simulasi","🧪","Simulasi"],["profil","👤","Profil"]];
+ return pg("Menu Utama",`<p class="mu">Halo, <b>${esc(user.nama)}</b> (${esc(user.kelas)})! Pilih menu untuk mulai belajar.</p><div class="tiles">${T.map(x=>`<a class="tile" href="#${x[0]}"><span>${x[1]}</span>${x[2]}</a>`).join("")}</div>`,'<a class="btn" href="#beranda">⬅ Sampul</a><span></span>')},
+petunjuk:()=>pg("Petunjuk Penggunaan",`<ol><li>Tekan tombol <b>🏠</b> di pojok kiri atas untuk kembali ke Menu Utama.</li><li>Isi <b>nama dan kelas</b> di halaman login, lalu tekan Masuk.</li><li>Pelajari <b>Materi</b> dengan tombol Sebelumnya dan Berikutnya.</li><li>Di <b>Simulasi</b>, geser slider lalu amati animasi dan angka yang berubah.</li><li>Kerjakan <b>Kuis</b>; setiap jawaban langsung mendapat umpan balik.</li><li>Lihat informasi pembuat di menu <b>Profil</b>.</li></ol>`),
+kompetensi:()=>pg("Kompetensi",`<h3>Capaian Pembelajaran</h3><p>Peserta didik mampu menganalisis gerak benda pada lintasan lurus dan melengkung serta menerapkannya pada situasi sehari-hari.</p><h3>Tujuan Pembelajaran</h3><ul><li>Membedakan GLB, GLBB, jatuh bebas, dan parabola.</li><li>Menjelaskan hubungan jarak, waktu, kecepatan, dan percepatan.</li><li>Membaca jejak gerak benda pada animasi.</li><li>Menghitung besaran gerak dengan rumus yang sesuai.</li></ul>`),
+materi(){const k=Object.keys(M)[mi],o=M[k];return pg(`Materi ${mi+1}/4`,`<div class="mh"><span>${o.ic}</span><div><small>Materi ${mi+1} dari 4</small><h2>${o.t}</h2></div></div><p>${o.d}</p><h3>✨ Ciri-ciri</h3><div class="ch">${o.ciri.map((x,i)=>`<div><b>${i+1}</b>${x}</div>`).join("")}</div><h3>📐 Rumus</h3><p><span class="f" style="font-size:1.15rem">${o.f}</span></p><h3>▶ Lihat animasinya</h3><div id="mb"></div><div class="fact">💡 <b>Tahukah kamu?</b> ${o.fk}</div><p><b>Contoh sehari-hari:</b> ${o.c}</p>`,
+ `<button class="b" ${mi?"":"disabled"} onclick="mi--;route()">◀ Sebelumnya</button><a class="btn" href="#menu">Menu</a>`+(mi<3?`<button class="b p" onclick="mi++;route()">Berikutnya ▶</button>`:`<a class="btn p" href="#simulasi">Ke Simulasi ▶</a>`))},
+simulasi:()=>pg("Simulasi",`<div class="tabs">${Object.keys(M).map(k=>`<button class="tab${k==sm?" on":""}" onclick="sm='${k}';route()">${M[k].n}</button>`).join("")}</div><div id="sb"></div><div class="fact">💡 ${M[sm].d}</div><p>Rumus: <span class="f">${M[sm].f}</span></p>`),
+profil:()=>pg("Profil Pengembang",`<table><tr><td>Nama</td><td>: [isi nama]</td></tr><tr><td>NIM</td><td>: [isi NIM]</td></tr><tr><td>Program Studi</td><td>: Pendidikan Teknik Elektro</td></tr><tr><td>Universitas</td><td>: Universitas Negeri Malang</td></tr><tr><td>Dosen Pengampu</td><td>: [isi nama dosen]</td></tr></table>`)
+};
+
+/* ---------- kuis ---------- */
+const Q=[["Benda bergerak lurus dengan kecepatan tetap. Jenis geraknya…",["GLBB","GLB","Jatuh bebas","Parabola"],1,"Kecepatan tetap berarti percepatan nol: ciri GLB."],
+["Mobil melaju 20 m/s selama 5 detik secara GLB. Jarak tempuhnya…",["4 m","25 m","100 m","200 m"],2,"s = v × t = 20 × 5 = 100 m."],
+["Pada GLBB dipercepat, jarak antartitik jejak semakin…",["Sama","Menyempit","Melebar","Acak"],2,"Kecepatan bertambah, sehingga perpindahan tiap selang waktu makin besar."],
+["Benda diam dipercepat 4 m/s² selama 3 detik. Kecepatannya…",["7 m/s","12 m/s","18 m/s","1,3 m/s"],1,"v = a × t = 4 × 3 = 12 m/s."],
+["Dua benda berbeda massa dijatuhkan bersamaan tanpa hambatan udara. Yang tiba lebih dulu…",["Yang berat","Yang ringan","Bersamaan","Tergantung bentuk"],2,"Percepatan gravitasi tidak bergantung pada massa."],
+["Benda jatuh bebas 2 detik (g = 10 m/s²). Tinggi yang ditempuh…",["10 m","20 m","40 m","5 m"],1,"h = ½·g·t² = ½ × 10 × 4 = 20 m."],
+["Gerak parabola merupakan gabungan…",["GLB sumbu x dan GLBB sumbu y","GLBB sumbu x dan GLB sumbu y","Dua GLB","Dua GLBB"],0,"Sumbu x tanpa percepatan (GLB), sumbu y dipengaruhi gravitasi (GLBB)."],
+["Di titik tertinggi gerak parabola, kecepatan vertikalnya…",["Maksimum","Nol","Negatif","Sama dengan awal"],1,"Di puncak benda berhenti naik dan belum turun, jadi v_y = 0."],
+["Jangkauan terjauh gerak parabola dicapai pada sudut…",["30°","45°","60°","90°"],1,"Jangkauan sebanding dengan sin 2θ, maksimum saat θ = 45°."]];
+let qi=0,sc=0,ans=[],done=false;
+const best=()=>{try{return +localStorage.getItem("gk_best")||0}catch(e){return 0}};
+function kuis(){qi=0;sc=0;ans=[];st$.innerHTML=pg("Kuis",`<p>Kuis terdiri dari ${Q.length} soal pilihan ganda dengan umpan balik langsung.</p><p class="mu">Skor terbaikmu: ${best()}</p><button class="b p" onclick="soal()">Mulai Kuis</button>`)}
+function soal(){const it=Q[qi];done=false;st$.innerHTML=pg(`Kuis · Soal ${qi+1} dari ${Q.length}`,`<div class="bar"><i style="width:${qi/Q.length*100}%"></i></div><h3 style="margin-top:0">${it[0]}</h3>${it[1].map((x,j)=>`<button class="opt" onclick="pick(this,${j})">${String.fromCharCode(65+j)}. ${x}</button>`).join("")}<div id="fb" class="fact" style="display:none"></div>`,`<a class="btn" href="#menu">⬅ Menu</a><button class="b p" id="nx" style="display:none" onclick="qi++;qi<Q.length?soal():hasil()">${qi==Q.length-1?"Lihat Hasil":"Lanjut ▶"}</button>`)}
+function pick(b,j){if(done)return;done=true;const it=Q[qi],ok=j==it[2];if(ok)sc++;ans.push(j);b.classList.add(ok?"ok":"no");document.querySelectorAll(".opt")[it[2]].classList.add("ok");const f=$("fb");f.style.display="block";f.innerHTML=ok?"✅ <b>Benar!</b> Penjelasan: "+it[3]:"❌ <b>Belum tepat.</b> Jawaban yang benar: <b>"+String.fromCharCode(65+it[2])+". "+it[1][it[2]]+"</b>.<br>Penjelasan: "+it[3];$("nx").style.display="inline-block"}
+function hasil(){const pct=Math.round(sc/Q.length*100);try{if(pct>best())localStorage.setItem("gk_best",pct)}catch(e){}
+ st$.innerHTML=pg("Hasil Kuis",`<p class="mu" style="text-align:center;margin:0">${esc(user.nama)} · ${esc(user.kelas)}</p><div class="big">${pct}</div><p style="text-align:center">Benar ${sc} dari ${Q.length} soal. ${pct>=80?"Sangat baik! Konsepmu sudah kuat.":pct>=60?"Cukup baik. Ulangi materi yang masih keliru.":"Yuk pelajari lagi materi dan simulasinya."}</p>`+Q.map((it,i)=>`<p style="margin:5px 0;color:var(--${ans[i]==it[2]?"ok":"no"})">${i+1}. ${ans[i]==it[2]?"✔ Benar":"✘ Salah — jawaban: "+it[1][it[2]]}</p>`).join(""),`<a class="btn" href="#menu">⬅ Menu</a><button class="b p" onclick="kuis()">Ulangi Kuis</button>`)}
+
+/* ---------- router ---------- */
+let user=null;const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function masuk(){const n=$("nm").value.trim(),k=$("kl").value.trim();if(!n||!k){$("er").textContent="Nama dan kelas wajib diisi.";return}user={nama:n,kelas:k};location.hash="menu"}
+function route(){tok++;let h=location.hash.slice(1);if(!R[h]&&h!="kuis")h="beranda";if(!user&&h!="beranda"&&h!="login")h="login";
+ if(h=="kuis")kuis();else st$.innerHTML=R[h]();
+ if(h=="materi")sim($("mb"),Object.keys(M)[mi],false);
+ if(h=="simulasi")sim($("sb"),sm,true);
+ scrollTo(0,0)}
+addEventListener("hashchange",route);route();
+</script></body></html>
